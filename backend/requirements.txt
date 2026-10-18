@@ -1,0 +1,10 @@
+django
+djangorestframework
+django-cors-headers
+drf-yasg
+gunicorn
+langchain
+langchain-core
+langchain-groq
+python-dotenv
+pydantic

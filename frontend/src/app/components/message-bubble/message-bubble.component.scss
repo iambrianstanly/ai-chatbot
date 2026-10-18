@@ -1,0 +1,65 @@
+.message-row {
+  display: flex;
+  padding: 1rem 1rem;
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  gap: 1.25rem;
+  animation: fadeIn 0.3s ease;
+
+  &.user-row {
+    flex-direction: row-reverse;
+  }
+}
+
+.avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 4px;
+
+  svg { width: 16px; height: 16px; }
+}
+
+.bot-avatar {
+  background: #10a37f; // ChatGPT green
+  color: white;
+}
+
+.user-avatar {
+  background: #7c3aed;
+  color: white;
+  border-radius: 50%;
+}
+
+.bubble {
+  flex: 1;
+  max-width: 100%;
+  padding: 0.5rem 0;
+  line-height: 1.6;
+  font-size: 1rem;
+  color: var(--text-main);
+
+  p {
+    margin: 0;
+    white-space: pre-wrap;
+  }
+}
+
+.user-bubble {
+  background: var(--user-bubble);
+  padding: 0.75rem 1.25rem;
+  border-radius: 20px;
+  max-width: 80%;
+  flex: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

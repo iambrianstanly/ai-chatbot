@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyw
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+wheels/
+*.manifest
+*.spec
+.venv/
+.venv/
+ENV/
+env/
+
+# Environment variables
+.env
+*.env.local
+
+# IDEs
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Angular / Node
+frontend/node_modules/
+frontend/.angular/
+frontend/dist/
+
+# OS
+.DS_Store
+Thumbs.db
