@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatService, Message, Session } from './services/chat.service';
@@ -21,11 +21,49 @@ export class App implements OnInit {
   userInput = '';
   isLoading = false;
   errorMessage = '';
+  activeMenuSessionId: string | null = null;
 
   constructor(
     private chatService: ChatService,
     private cdr: ChangeDetectorRef
   ) {}
+
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    if (this.activeMenuSessionId !== null) {
+      this.activeMenuSessionId = null;
+    }
+  }
+
+  toggleSessionMenu(event: MouseEvent, sessionId: string): void {
+    event.stopPropagation();
+    this.activeMenuSessionId = this.activeMenuSessionId === sessionId ? null : sessionId;
+  }
+
+  deleteSession(event: MouseEvent, session: Session): void {
+    event.stopPropagation();
+    this.activeMenuSessionId = null;
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    const wasCurrent = this.currentSession?.session_id === session.session_id;
+
+    this.chatService.deleteSession(session.session_id).subscribe({
+      next: () => {
+        if (wasCurrent) {
+          this.currentSession = null;
+          this.messages = [];
+        }
+        this.loadSessions(true);
+      },
+      error: (err) => {
+        console.error('Failed to delete session:', err);
+        this.isLoading = false;
+        this.errorMessage = 'Failed to delete session.';
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadSessions(true);
