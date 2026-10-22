@@ -1,4 +1,21 @@
 services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: chatbot
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d chatbot"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
   backend:
     build:
       context: .
@@ -8,10 +25,10 @@ services:
     env_file:
       - backend/.env
     environment:
-      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-django-insecure-ai-chatbot-key-2026-may}
-      SQLITE_PATH: /data/chatbot.db
-    volumes:
-      - sqlite-data:/data
+      DATABASE_URL: postgresql+asyncpg://postgres:postgrespassword@db:5432/chatbot
+    depends_on:
+      db:
+        condition: service_healthy
 
   frontend:
     build:
@@ -23,4 +40,4 @@ services:
       - backend
 
 volumes:
-  sqlite-data:
+  pgdata:

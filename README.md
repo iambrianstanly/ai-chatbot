@@ -1,31 +1,31 @@
 # AI Chatbot
 
-A full-stack chatbot with an **Angular** UI and a **Django REST** backend. Chat completions go through **LangChain** to **Groq**.
+A full-stack chatbot with a **React** UI and a **FastAPI** backend with **PostgreSQL**. Chat completions go through **LangChain** to **Groq**.
 
 ```
 ┌───────────────────┐
-│   Angular App     │
+│     React App     │
 │  localhost:4200   │
 └─────────┬─────────┘
-          │ REST (HttpClient)
+          │ REST (Fetch)
           ▼
 ┌───────────────────┐
-│  Django REST API  │
+│    FastAPI API    │
 │  localhost:8000   │
-└─────────┬─────────┘
-          │ LangChain
-          ▼
-┌───────────────────┐
-│   Groq LLM API    │
-│ openai/gpt-oss-20b│
-└───────────────────┘
+└────┬──────────┬───┘
+     │          │ LangChain
+     ▼          ▼
+┌────────────┐ ┌───────────────┐
+│ PostgreSQL │ │ Groq LLM API  │
+│    5432    │ │openai/gpt-oss-│
+└────────────┘ └───────────────┘
 ```
 
 ```
 .
-├── backend/           # Django + DRF + LangChain + Groq
-├── frontend/          # Angular chatbot UI
-├── Dockerfile         # Multi-stage: backend (Gunicorn) and frontend (nginx)
+├── backend/           # FastAPI + SQLAlchemy (asyncpg) + LangChain + Groq
+├── frontend/          # React + Vite + TypeScript chatbot UI
+├── Dockerfile         # Multi-stage: backend (Uvicorn) and frontend (nginx)
 └── docker-compose.yml
 ```
 
